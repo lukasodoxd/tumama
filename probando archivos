@@ -1,0 +1,84 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct 
+	{
+		char id [30];
+		char nomCliente [30];
+		char detalle[200];
+		int monto [15];
+		int estadoI; //estadoI (estado inicial) esta variable guarda un numero del 1 al 4, para hacer referencia a algun estado del presupuesto
+		char estadoF [15]; // estadoF (estado final) Aqui se guardara, dependiendo el numero que haya en estadoI, el estado real del presupuesto
+		bool borrar;
+	}Tpresupuesto;
+
+Tpresupuesto reg;
+
+void altaPresupuesto ();
+int op;
+
+int main (){
+
+	FILE* archivo;
+	
+	archivo = fopen("archivo.txt","a+");
+	if (archivo == NULL){
+		
+		printf("Error al abrir el archivo!");
+		
+	}
+
+	
+	bool carga = true ;
+	int aux;
+	while (carga=true){ 
+		
+		printf("Ingrese la ID del presupuesto : "); fflush (stdin); //probar 
+		scanf("%s", &reg.id);
+		printf("Ingrese el nombre del cliente : ");fflush (stdin);
+		scanf("%s", &reg.nomCliente);
+		printf("Ingrese detalles del presupuesto : ");fflush (stdin);
+		scanf("%s", &reg.detalle);
+		printf("Ingrese el monto presupuestado : ");fflush (stdin);
+		scanf("%d", &reg.monto);
+		printf("Ingrese el estado del presupuesto. Las opciones son: 1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado ");fflush (stdin);
+		scanf("%i", &reg.estadoI);
+		if (reg.estadoI<1 or reg.estadoI>4) {
+		
+			while (reg.estadoI<1 or reg.estadoI>4){
+				printf("Ingrese un estado valido. Recuerde, los estados validos son:1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado ");
+				scanf("%i", &reg.estadoI);
+					};
+	};
+		if (reg.estadoI==1) {
+			strcpy(reg.estadoF,"consultado"); }
+			 else if (reg.estadoI==2) {
+					strcpy(reg.estadoF,"Confirmado");}
+					else if (reg.estadoI==3){
+							strcpy(reg.estadoF,"Enviado");}
+							else if (reg.estadoI==4) {
+								strcpy(reg.estadoF,"Entregado");}
+		
+						
+			
+			
+		&reg.borrar== false;
+		
+	fwrite(&reg,sizeof(reg),1,archivo);
+	fclose(archivo);
+	getchar();
+	printf("Si desea cargar otro presupuesto pulse [1], de lo contrario, [2]");
+	scanf("%i",&aux);
+	if (aux == 2) {
+		printf("Carga exitosa!");
+		exit(1);
+		}
+	carga==false; 
+	
+	
+	};
+	
+	
+	
+}
