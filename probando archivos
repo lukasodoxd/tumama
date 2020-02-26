@@ -10,13 +10,12 @@ typedef struct
 		int monto [15];
 		int estadoI; //estadoI (estado inicial) esta variable guarda un numero del 1 al 4, para hacer referencia a algun estado del presupuesto
 		char estadoF [15]; // estadoF (estado final) Aqui se guardara, dependiendo el numero que haya en estadoI, el estado real del presupuesto
-		bool borrar;
+		int borrar;
 	}Tpresupuesto;
 
 Tpresupuesto reg;
 
 void altaPresupuesto ();
-int op;
 
 int main (){
 
@@ -30,9 +29,9 @@ int main (){
 	}
 
 	
-	bool carga = true ;
+	int carga = 0 ;
 	int aux;
-	while (carga=true){ 
+	while (carga==0){ 
 		
 		printf("Ingrese la ID del presupuesto : "); fflush (stdin); //probar 
 		scanf("%s", &reg.id);
@@ -44,9 +43,9 @@ int main (){
 		scanf("%d", &reg.monto);
 		printf("Ingrese el estado del presupuesto. Las opciones son: 1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado ");fflush (stdin);
 		scanf("%i", &reg.estadoI);
-		if (reg.estadoI<1 or reg.estadoI>4) {
+		if (reg.estadoI<1 || reg.estadoI>4) {
 		
-			while (reg.estadoI<1 or reg.estadoI>4){
+			while (reg.estadoI<1 ||	 reg.estadoI>4){
 				printf("Ingrese un estado valido. Recuerde, los estados validos son:1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado ");
 				scanf("%i", &reg.estadoI);
 					};
@@ -63,7 +62,7 @@ int main (){
 						
 			
 			
-		&reg.borrar== false;
+		&reg.borrar== 0;
 		
 	fwrite(&reg,sizeof(reg),1,archivo);
 	fclose(archivo);
@@ -74,7 +73,7 @@ int main (){
 		printf("Carga exitosa!");
 		exit(1);
 		}
-	carga==false; 
+	carga==1; 
 	
 	
 	};
