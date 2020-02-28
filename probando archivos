@@ -1,3 +1,4 @@
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
@@ -7,7 +8,7 @@ typedef struct
 		char id [30];
 		char nomCliente [30];
 		char detalle[200];
-		int monto [15];
+		float monto;
 		int estadoI; //estadoI (estado inicial) esta variable guarda un numero del 1 al 4, para hacer referencia a algun estado del presupuesto
 		char estadoF [15]; // estadoF (estado final) Aqui se guardara, dependiendo el numero que haya en estadoI, el estado real del presupuesto
 		int borrar;
@@ -15,43 +16,46 @@ typedef struct
 
 Tpresupuesto reg;
 
-void altaPresupuesto ();
+//void altaPresupuesto ();
 
 int main (){
 
-	FILE* archivo;
+	FILE * archivoxd;
 	
-	archivo = fopen("archivo.txt","a+");
-	if (archivo == NULL){
+	archivoxd = fopen("archivoxd.dat","a+");
+	if (archivoxd == NULL){
 		
-		printf("Error al abrir el archivo!");
+		printf("Error al abrir el archivo! ");
 		
+		exit(1);
 	}
-
 	
+
+	int most;
 	int carga = 0 ;
 	int aux;
-	while (carga==0){ 
-		
+	
+	while (carga==0){
+	 
 		printf("Ingrese la ID del presupuesto : "); fflush (stdin); //probar 
-		scanf("%s", &reg.id);
+		gets(reg.id);
 		printf("Ingrese el nombre del cliente : ");fflush (stdin);
-		scanf("%s", &reg.nomCliente);
+		gets(reg.nomCliente);
 		printf("Ingrese detalles del presupuesto : ");fflush (stdin);
-		scanf("%s", &reg.detalle);
+		gets(reg.detalle);
 		printf("Ingrese el monto presupuestado : ");fflush (stdin);
-		scanf("%d", &reg.monto);
-		printf("Ingrese el estado del presupuesto. Las opciones son: 1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado ");fflush (stdin);
+		scanf("%f", &reg.monto);
+		printf("Ingrese el estado del presupuesto. Las opciones son: 1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado \n");fflush (stdin);
 		scanf("%i", &reg.estadoI);
 		if (reg.estadoI<1 || reg.estadoI>4) {
 		
 			while (reg.estadoI<1 ||	 reg.estadoI>4){
-				printf("Ingrese un estado valido. Recuerde, los estados validos son:1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado ");
+				printf("Ingrese un estado valido. Recuerde, los estados validos son:1- Consultado , 2- Confirmado , 3- Enviado , 4- Entregado \n");fflush (stdin);
 				scanf("%i", &reg.estadoI);
 					};
 	};
 		if (reg.estadoI==1) {
-			strcpy(reg.estadoF,"consultado"); }
+			strcpy(reg.estadoF,"Consultado"); }
 			 else if (reg.estadoI==2) {
 					strcpy(reg.estadoF,"Confirmado");}
 					else if (reg.estadoI==3){
@@ -63,21 +67,49 @@ int main (){
 			
 			
 		&reg.borrar== 0;
-		
-	fwrite(&reg,sizeof(reg),1,archivo);
-	fclose(archivo);
-	getchar();
-	printf("Si desea cargar otro presupuesto pulse [1], de lo contrario, [2]");
+	fwrite(&reg,sizeof(reg),1,archivoxd);
+	
+	printf("Si desea cargar otro presupuesto pulse [1], de lo contrario, [2] \n");
 	scanf("%i",&aux);
 	if (aux == 2) {
-		printf("Carga exitosa!");
-		exit(1);
-		}
-	carga==1; 
+		printf("Carga exitosa! \n");
+		carga=1; 
+		fclose(archivoxd);
+		//getchar(); 
+	}
 	
 	
+		//exit(1);
+		
 	};
+
 	
+	//void borrarArchivo () {
 	
+	//void mostrarPresupuestos(/*pasar parametros*/){
 	
-}
+	printf("Presione [1] para ver todos los presupuestos. Presione [2] para salir");
+	scanf("%i", &most);
+	if (most==1) {
+		
+		archivoxd = fopen("archivoxd.dat","r");
+		while (fread(&reg,sizeof(reg),1,archivoxd)==1) {
+		//	fread(&reg,sizeof(reg),1,archivoxd);  
+			printf("ID = %s \n", reg.id);
+			printf("Nombre del cliente = %s \n", reg.nomCliente);
+			printf("Detalles del presupuesto = %s \n", reg.detalle);
+			printf("Monto = %f \n", reg.monto);
+			printf("Estado del presupuesto = %s \n", reg.estadoF);
+			printf("------------------------------------------------- \n");
+		};
+		fclose(archivoxd);
+	};
+		
+		
+		
+		
+
+		
+		
+		return 0;
+};
